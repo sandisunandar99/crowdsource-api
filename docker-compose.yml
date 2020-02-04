@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  mongo:
+    image: ${I_DATABASE}
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+    #   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+        - "./data/mongo:/data"
+    networks:
+      - crowdsource-api-network
+
+  mongo-express:
+    image: ${I_MNG_DATABASE}
+    ports:
+        - 8081:8081
+    environment:
+        ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+        ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+        # ME_CONFIG_MONGODB_PORT: ${ME_CONFIG_MONGODB_PORT}
+        # ME_CONFIG_MONGODB_ADMINUSERNAME: ${ME_CONFIG_MONGODB_ADMINUSERNAME}
+        # ME_CONFIG_MONGODB_ADMINPASSWORD: ${ME_CONFIG_MONGODB_ADMINPASSWORD}
+    links:
+        - mongo
+    networks:
+        - crowdsource-api-network
+   
+  backend:
+    image: ${I_API}
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+        - "3333:3333"
+    volumes: 
+        - .:/app
+        - /app/node_modules
+    links: 
+        - mongo
+    depends_on: 
+        - mongo
+    environment: 
+        MONGODB_URI: ${MONGO_DB_URI}
+    networks: 
+        - crowdsource-api-network
+
+networks: 
+    crowdsource-api-network:
+      driver: bridge
