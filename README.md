@@ -1,5 +1,5 @@
-# Jabar Survey Backend
-API service for Jabar survey application
+# REST API Crowdsource app
+API service for crowdsource application
 
 ## Core Stack
 
@@ -11,8 +11,8 @@ API service for Jabar survey application
 
 Clone project and install dependencies:
 ```bash
-$ https://gitlab.com/jdsteam/crowdsource/survey-backend.git
-$ cd survey-bakcend
+$ https://github.com/sandisunandar99/crowdsource-api.git
+$ cd crowdsource-api
 $ docker-compose up --build
 ```
 
@@ -59,7 +59,7 @@ $ npm test
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2020 JDS (Jabar Digital Service)
+Copyright (c) 2020 Sandi Sunandar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
